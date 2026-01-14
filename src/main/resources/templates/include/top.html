@@ -1,0 +1,30 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="top">
+
+    <!-- CSS -->
+    <link th:href="@{/css/top.css}" rel="stylesheet">
+
+    <!-- Header -->
+    <header class="top-header">
+        <h1>마주스토리 쇼핑몰관리 관리자 ver 1.0</h1>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="top-nav">
+        &emsp;&emsp;&emsp;
+        <a th:href="@{/main.do}">홈으로</a>&emsp;
+        <a th:href="@{/member/form.do}">회원가입</a>&emsp;
+        <a th:href="@{/member/list.do}">회원목록</a>&emsp;
+               
+     &emsp;
+    <a th:href="@{/admin/main.do}">관리자영역</a>&emsp;
+    <a th:href="@{/manager/main.do}">관리자&매니저영역</a>&emsp;
+    <a th:href="@{/product/main.do}">회원영역</a>&emsp;
+    <a th:href="@{/product/form.do}">상품등록(회원)</a>&emsp;
+    <a th:href="@{/product/list.do}">상품리스트</a>&emsp;
+    
+    <a th:href="@{/logout}">로그아웃</a>
+    </nav>
+
+</div>

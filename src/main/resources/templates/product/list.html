@@ -1,0 +1,41 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="include/top"></div>
+<section>
+<br>
+<div align="center"> 
+  	<h1> 쇼핑몰 상품목록 </h1> 
+ 	<table border =1>
+  	<tr>
+  		<td>번호</td>
+  		<td>상품코드</td>
+  		<td>상품이름</td>
+  		<td>상품가격</td>
+  		<td>상품재고</td>
+      	<td>상품이미지</td>
+      	<td>상품등록일</td>
+      	<td>상품담당자</td>
+	</tr>
+ 	<tr th:each="m : ${li}">
+		<td th:text="${m.idx}"></td>
+		<td th:text="${m.pid}"></td>
+		<td>   
+      		<a th:href="@{/product/edit.do(idx=${m.idx})}" th:text="${m.pname}"></a>
+		</td>
+  		<td th:text="${m.pprice}"></td>
+  		<td th:text="${m.pquantity}"></td>
+  		<td>
+  			<img th:src="@{https://s3-20260108.s3.ap-northeast-2.amazonaws.com/{file}(file=${m.pimgname})}" width=50 height=50 >
+  		</td>
+  		<td th:text="${m.today}"></td>
+		<td th:text="${m.padmin}"></td>
+	</tr>
+</table> 
+ 
+    
+</div>
+<br>
+</section>
+<div th:replace="include/bottom::footer"></div>
+</body>
+</html>

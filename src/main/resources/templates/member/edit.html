@@ -1,0 +1,116 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:replace="include/top::top"></div>
+<section>
+<br>
+<div align="center"> 
+  <h1> 회원 상세보기 </h1>
+  <form th:action="@{update.do}" th:object="${m}" method="POST">
+  <input type=hidden  th:field="*{idx}" >
+  <table border=1>
+  <tr><td>username </td> <td><input type=text  th:field="*{username}" readonly> </td></tr>
+  <tr><td>password </td> <td><input type=text name=password id=password  
+                                    placeholder="비밀번호를 입력하세요" 
+                                    minlength="4" maxlength="20"  required> </td></tr>
+  <tr><td>name </td> <td><input type=text th:field="*{name}"> </td></tr>
+  <tr><td>ROLE </td> <td>
+  <select th:field="*{role}" >
+    <option value="ROLE_ADMIN">관리자(Admin)</option>
+    <option value="ROLE_MANAGER">매니저</option>
+    <option value="ROLE_MEMBER">회원</option>
+    <option value="ROLE_GUEST">손님</option>
+  </select>
+   </td></tr>
+  <tr><td>age </td> <td><input type=text  th:field="*{age}"> </td></tr>
+  <tr><td>tel </td> <td><input type=text  th:field="*{tel}"> </td></tr>
+  <tr><td>addr </td> <td>
+  
+ 	<input type="text" th:field="*{sample6Postcode}"  placeholder="우편번호">
+	<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+	<input type="text"  th:field="*{sample6Address}"   placeholder="주소" size=50 required><br>
+	<input type="text"  th:field="*{sample6DetailAddress}" placeholder="상세주소">
+	<input type="text"  th:field="*{sample6ExtraAddress}"  placeholder="참고항목">
+    
+  </td></tr>
+  <tr><td>etc </td> <td><textarea name=etc cols=50 rows=5  th:field="*{etc}"></textarea> </td></tr>
+  <tr> <td colspan=2 align="center">
+  <input type=button value="회원등록" onClick="formK()">
+  <input type=submit value="수정하기">  
+  <input type=button value="삭제하기" onClick="delK()">
+  <input type=button value="회원목록" onClick="listK()"> 
+  </td></tr>  
+  </table>  
+  </form>
+   
+</div>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script th:inline="javascript">
+	   function delK(){
+		   const idx = /*[[${m.idx}]]*/'';
+		   location.href = "/member/delete.do?idx=" + idx;
+	   }
+	
+	   function formK(){
+		   location.href = "/member/form.do";
+	   }
+		   
+	   function listK(){
+			location.href = "/member/list.do";
+	   }
+	
+	
+		function sample6_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if(extraAddr !== ''){
+                        extraAddr = ' (' + extraAddr + ')';
+                    }
+                    // 조합된 참고항목을 해당 필드에 넣는다.
+                    document.getElementById("sample6ExtraAddress").value = extraAddr;
+                
+                } else {
+                    document.getElementById("sample6ExtraAddress").value = '';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('sample6Postcode').value = data.zonecode;
+                document.getElementById("sample6Address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("sample6DetailAddress").focus();
+            }
+        }).open();
+    }
+		
+	</script>
+<br>
+</section>
+<div th:replace="include/bottom::footer"></div>
+
+</body>
+</html>

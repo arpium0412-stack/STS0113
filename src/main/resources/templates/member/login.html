@@ -1,0 +1,24 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:replace="include/top::top"></div>
+<section>
+<br>
+<div align="center"> 
+
+  <h1> 회원로그인 </h1>
+  <!-- security Config에서 제어를 하고 있어서 action을 써주지 말것. -->
+  <form  method="POST">
+  <table border=1>
+  <tr><td>username </td> <td><input type=text name=username id=username >  </td></tr>
+  <tr><td>password </td> <td><input type=text name=password id=password > </td></tr>
+  <tr><td colspan=2 align="center"><input type=submit value="로그인" > </td></tr>
+  </table>  
+  </form>
+  
+</div>  
+
+</section>
+<div th:replace="include/bottom::footer"></div>
+
+</body>
+</html>

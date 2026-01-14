@@ -1,0 +1,69 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div th:replace="include/top::top"></div>
+	<section>
+		<br>
+		<div align="center">
+			<h1>쇼핑몰 상품등록하기</h1>
+			<form th:action="@{formOK.do}" method="POST" enctype="multipart/form-data">
+				<table border=1>
+					<tr>
+						<td>상품 카테고리</td>
+						<td>
+							<select name=category id=category>
+								<option value="TY">장난감</option>
+								<option value="FL">꽃</option>
+								<option value="RM">라면</option>
+								<option value="ST">학용품</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td>상품이름</td>
+						<td><input type=text name=pname id=pname></td>
+					</tr>
+					<tr>
+						<td>상품가격</td>
+						<td><input type=text name=pprice id=pprice></td>
+					</tr>
+
+					<tr>
+						<td>상품수량</td>
+						<td><select name=pquantity id=pquantity>
+								<option value="1">1개</option>
+								<option value="2">2개</option>
+								<option value="3">3개</option>
+								<option value="4">4개</option>
+						</select></td>
+					</tr>
+					<tr>
+						<td>상품관리자</td>
+						<td><input type=text name=padmin id=padmin></td>
+					</tr>
+					<tr>
+						<td>등록날짜</td>
+						<td><input type=date name=today id=today
+						th:value="${#temporals.format(#temporals.createNow(), 'yyyy-MM-dd')}"></td>
+					</tr>
+					<tr>
+						<td>상품 상세정보</td>
+						<td><input type=text name=pdesc id=pdesc></td>
+					</tr>
+					<tr>
+						<td>상품이미지</td>
+						<td><input type=file name=pfile id=pfile></td>
+					</tr>
+					<tr>
+						<td colspan=2 align="center"><input type=submit value="저장하기">
+						</td>
+					</tr>
+				</table>
+			</form>
+
+		</div>
+		<br>
+	</section>
+	<div th:replace="include/bottom::footer"></div>
+
+</body>
+</html>

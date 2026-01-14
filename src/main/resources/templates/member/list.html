@@ -1,0 +1,42 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:replace="include/top::top"></div>
+<section>
+<br>
+<div align="center"> 
+  <h1> 쇼핑몰 회원목록 </h1> 
+  
+  <table border =1 width=600>
+  <tr><td>번호</td><td>이름 </td><td>아이디 </td><td>나이 </td>
+      <td>주소 </td> </tr>
+ 
+ <tr th:each="m : ${li}">
+  <td th:text="${m.idx}"></td>
+  <td th:text="${m.name}"></td>
+  <td>   
+      <a th:href="@{/member/edit.do(idx=${m.idx})}"
+            th:text="${m.username}">
+      </a>
+   </td>
+  <td th:text="${m.age}"></td>
+  <td th:text="${m.sample6Address}"> </td>
+ 
+ </tr>
+</table> 
+
+<form th:action="@{/member/list.do}">
+ <select name=ch1>
+   <option value=name> 이 름 </option>
+   <option value=sample6Address> 주 소 </option>
+ </select>
+ <input  type=text name=ch2 >
+ <input  type=submit  value="검색하기" >
+</form>   
+   
+</div>
+
+</section>
+<div th:replace="include/bottom::footer"></div>
+
+</body>
+</html>
